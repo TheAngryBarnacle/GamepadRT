@@ -58,7 +58,7 @@ ui.run(win):wait()
 ```gamepad:update()```
 - Updates the keystroke provided by the DLL (must be called in the ui.update() or in canvas:onPaint()
 
-```gamepad:isConnected```
+```gamepad:isConnected()```
 - Returns true if a gamepad is connected, false otherwise
 
 ## Values returned by getKeystroke
