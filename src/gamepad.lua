@@ -1,7 +1,7 @@
 local c = require("c")
 local gamepad = {}
 local xinput = c.Library("xinput1_4.dll")
-local result
+local result,stateR
 local lastkey = "No New Keystrokes / Controller not connected"
 local isConnected = false
 
@@ -43,16 +43,31 @@ local button_map = {
     [22583] = "RTHUMB_DOWNLEFT" 
 }
 
+local flag_map = {
+ [1] = "Key Down",
+ [2] = "Key Up",
+ [5] = "Key Repeating"
+}
 
 local xinput_keystroke = c.Struct("SwSCC", "VirtualKey", "Unicode", "Flags", "UserIndex", "HidCode")
-local xinput_gamepad = c.Struct("SCCssss","wButtons","bLeftTrigger","bRightTrigger","sThumbLX","sThumbLY","sThumbRX","sThumbRY")
 
 xinput.XInputGetKeystroke = "(IIp)I"
 
 local keystroke = xinput_keystroke()
 
+
 function gamepad:update()
-  result = xinput.XInputGetKeystroke(0,0,c.addr(keystroke))
+  result = xinput.XInputGetKeystroke(0,0,keystroke)
+end
+
+
+
+function gamepad:isRepeating()
+  if keystroke.Flags == 5 then
+    return true
+  else
+    return false
+  end
 end
 
 function gamepad:isConnected()
@@ -65,9 +80,9 @@ end
 function gamepad:getKeystroke()
   if result == 0 then
     lastkey = button_map[keystroke.VirtualKey]
-    return lastkey
+    return button_map[keystroke.VirtualKey]
   else
-    return lastkey
+    
   end
 end
 
