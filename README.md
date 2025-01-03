@@ -61,6 +61,9 @@ ui.run(win):wait()
 ```gamepad:isConnected()```
 - Returns true if a gamepad is connected, false otherwise
 
+```gamepad:isRepeating()```
+- Returns true if the current keystroke is repeating, false otherwise
+
 ## Values returned by getKeystroke
 - Buttons
   - ```A```
@@ -103,5 +106,5 @@ ui.run(win):wait()
 1. Add support for axis dection (angle)
 2. Add support for battery information from a wireless controller (if able to)
 3. Add support for detecting if the press is Down or Up
-4. Add Support for detecting if the press is repeating or not
+4. 	~~Add Support for detecting if the press is repeating or not~~
 
