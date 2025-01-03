@@ -100,7 +100,7 @@ ui.run(win):wait()
 
 
 ## TODOs:
-1. Add support for axis
+1. Add support for axis dection (angle)
 2. Add support for battery information from a wireless controller (if able to)
 3. Add support for detecting if the press is Down or Up
 4. Add Support for detecting if the press is repeating or not
