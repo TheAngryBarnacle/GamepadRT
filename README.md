@@ -67,7 +67,7 @@ ui.run(win):wait()
 ```gamepad:onKeyUp()```
 - Returns the current Key up event (when released)
 
-## Values returned by getKeystroke
+## Values returned
 - Buttons
   - ```A```
   - ```B```
