@@ -37,7 +37,7 @@ function canvas:onPaint()
   self:print(gamepad:getKeystroke(),10,10) -- Print the current key
   
   if gamepad:isPressed("A") then
-    print("A Buttons has been pressed",10,50) -- print to the console since as soon as the a is let go, it returns to false
+    print("A Buttons has been pressed") -- print to the console since as soon as the a is let go, it returns to false
   end
 end
 
