@@ -34,7 +34,6 @@ canvas.align = "all"
 function canvas:onPaint()
   self:clear()
   gamepad:update() -- update the dll
-  self:print(gamepad:getKeystroke(),10,10) -- Print the current key
   
   if gamepad:isPressed("A") then
     print("A Buttons has been pressed") -- print to the console since as soon as the a is let go, it returns to false
