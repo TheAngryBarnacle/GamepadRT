@@ -49,9 +49,6 @@ ui.run(win):wait()
 
 
 ## Functions
-```gamepad:getKeystroke()``` 
-- Returns the current key/button press
-  
 ```gamepad:isPressed(key)```
 - Returns true of the specfied key is pressed
 
@@ -61,8 +58,14 @@ ui.run(win):wait()
 ```gamepad:isConnected()```
 - Returns true if a gamepad is connected, false otherwise
 
-```gamepad:isRepeating()```
+```gamepad:onKeyRepeat()```
 - Returns true if the current keystroke is repeating, false otherwise
+  
+```gamepad:onKeyDown()```
+- Returns the current Key down event (when pressed)
+
+```gamepad:onKeyUp()```
+- Returns the current Key up event (when released)
 
 ## Values returned by getKeystroke
 - Buttons
