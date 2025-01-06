@@ -49,23 +49,43 @@ local flag_map = {
  [5] = "Key Repeating"
 }
 
+
+local buttonPressed = {}
+
 local xinput_keystroke = c.Struct("SwSCC", "VirtualKey", "Unicode", "Flags", "UserIndex", "HidCode")
 
 xinput.XInputGetKeystroke = "(IIp)I"
 
 local keystroke = xinput_keystroke()
 
-
 function gamepad:update()
-  result = xinput.XInputGetKeystroke(0,0,keystroke)
+  result = xinput.XInputGetKeystroke(0, 0, keystroke)
 end
 
-
-
-function gamepad:isRepeating()
-  if keystroke.Flags == 5 then
+function gamepad:isPressed(key)
+  if result == 0 and key == button_map[keystroke.VirtualKey] and keystroke.Flags == 1 then
     return true
   else
+    return false
+  end
+end
+
+function gamepad:onKeyDown()
+  if result == 0 and keystroke.Flags == 1 then 
+    return button_map[keystroke.VirtualKey]
+  end
+end
+
+function gamepad:onKeyUp()
+  if result == 0 and keystroke.Flags == 2 then
+    return button_map[keystroke.VirtualKey]
+  end
+end
+
+function gamepad:onKeyRepeat()
+  if result == 0 and keystroke.Flags == 5 then
+    return true
+  else 
     return false
   end
 end
@@ -74,25 +94,6 @@ function gamepad:isConnected()
   if result  ~= 1167 then
     isConnected = true
     return isConnected
-  end
-end
-
-function gamepad:getKeystroke()
-  if result == 0 then
-    lastkey = button_map[keystroke.VirtualKey]
-    return button_map[keystroke.VirtualKey]
-  else
-    
-  end
-end
-
-function gamepad:isPressed(key)
-  if result == 0 then
-    if key == button_map[keystroke.VirtualKey] then
-      return true
-    else
-      return false
-    end
   end
 end
 
