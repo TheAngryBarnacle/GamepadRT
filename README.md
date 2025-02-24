@@ -7,6 +7,7 @@ This library requires **LuaRT 1.9.0** or later, as it depends on the new C modul
 ## Requirements
 
 - **LuaRT 1.9.0 or later** (this version includes the necessary C module required by GamepadRT)
+- **XINPUT.DLL** - This should be preinstalled on windows but if not, it can be downloaded from Microsoft
 - **A compatible gamepad device** connected to your computer
 
 ## Installation
