@@ -62,6 +62,12 @@ ui.run(win):wait()
 ### `gamepad:getBatteryInfo()`
 - Returns the current battery type and level.
 
+### `gamepad:getCurrentControllers()`
+  - Returns the index of the currently connected controllers.
+  
+### `gamepad:setCurrentController(id)`
+  - Sets the current controller by index.
+
 ### Functions Not Implemented But Present in the Source Code
 
 - `gamepad:leftTrigger(pressure)`
@@ -69,12 +75,7 @@ ui.run(win):wait()
   
 - `gamepad:rightTrigger(pressure)`
   - Returns the current pressure of the right trigger (0-255).
-  
-- `gamepad:getCurrentControllers()`
-  - Returns the index of the currently connected controllers.
-  
-- `gamepad:setCurrentController(id)`
-  - Sets the current controller by index.
+
 
 ## Button Values
 
