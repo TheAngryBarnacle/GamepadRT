@@ -1,113 +1,126 @@
+
 # GamepadRT
 
-**GamepadRT** is a Lua library that adds gamepad input functionality to LuaRT (version 1.9.0 and above). It allows you to easily integrate gamepad controls into your LuaRT projects, enabling users to interact with your applications using gamepad devices.
+**GamepadRT** is a Lua library that adds gamepad input functionality to LuaRT (version 1.9.0 and above). This library allows you to integrate gamepad controls into your LuaRT projects, enabling users to interact with your applications using gamepad devices.
 
-This library requires **LuaRT 1.9.0** or later, as it depends on the new C module introduced in version 1.9.0.
+This library requires **LuaRT 1.9.0** or later, as it relies on the new C module introduced in version 1.9.0.
 
 ## Requirements
 
 - **LuaRT 1.9.0 or later** (this version includes the necessary C module required by GamepadRT)
-- **XINPUT.DLL** - This should be preinstalled on windows but if not, it can be downloaded from Microsoft
+- **XINPUT.DLL** (typically preinstalled on Windows, but can be downloaded from Microsoft if needed)
 - **A compatible gamepad device** connected to your computer
 
 ## Installation
 
-To install **GamepadRT**, simply place the library file into your LuaRT project directory. Then, you can load it within your Lua script.
+To install **GamepadRT**, follow these steps:
 
 1. Download the GamepadRT Lua library.
 2. Place the library file in your LuaRT project's `modules/` directory or any directory of your choice.
 3. In your Lua script, include the library:
-```lua
-local gamepad = require("path/to/gamepad")
-```
+   ```lua
+   local gamepad = require("path/to/gamepad")
+   ```
+
 ## Basic Usage
-Here is a basic example of how to use GamepadRT to read gamepad inputs (button presses for now)
+
+Here’s a basic example of how to use GamepadRT to read gamepad inputs:
+
 ```lua
 local ui = require("ui")
-local gamepad = require("src/libraries/gamepad")
-require("canvas")
+local gamepad = require("path/to/gamepad")
 
 local win = ui.Window("Gamepad DEMO")
 
-local canvas = ui.Canvas(win)
-canvas.align = "all"
-
-function canvas:onPaint()
-  self:clear()
-  gamepad:update() -- update the dll
-  
-  if gamepad:isPressed("A") then
-    print("A Buttons has been pressed") -- print to the console since as soon as the a is let go, it returns to false
+function gamepad:onKeyDown(key, isRepeating)
+  if key == "A" and isRepeating then
+    print("A is being pressed and repeated")
   end
 end
 
-ui.run(win):wait()
+function win:onShow()
+  gamepad:Init() -- Start the async update task
+end
 
+ui.run(win):wait()
 ```
 
-
-
-
 ## Functions
-```gamepad:isPressed(key)```
-- Returns true of the specfied key is pressed
 
-```gamepad:update()```
-- Updates the keystroke provided by the DLL (must be called in the ui.update() or in canvas:onPaint()
+### `gamepad:Init()`
+- Initializes the GamepadRT module and starts the async update function.
 
-```gamepad:isConnected()```
-- Returns true if a gamepad is connected, false otherwise
+### `gamepad:isControllerConnected(cID)`
+- Returns `true` if the specified gamepad is connected, `false` otherwise.
 
-```gamepad:onKeyRepeat()```
-- Returns true if the current keystroke is repeating, false otherwise
+### `gamepad:onKeyDown(key, isRepeating)`
+- Called when a key is pressed. Returns the current key and whether it is repeating.
+
+### `gamepad:onKeyUp()`
+- Called when a key is released.
+
+### `gamepad:getBatteryInfo()`
+- Returns the current battery type and level.
+
+### Functions Not Implemented But Present in the Source Code
+
+- `gamepad:leftTrigger(pressure)`
+  - Returns the current pressure of the left trigger (0-255).
   
-```gamepad:onKeyDown()```
-- Returns the current Key down event (when pressed)
+- `gamepad:rightTrigger(pressure)`
+  - Returns the current pressure of the right trigger (0-255).
+  
+- `gamepad:getCurrentControllers()`
+  - Returns the index of the currently connected controllers.
+  
+- `gamepad:setCurrentController(id)`
+  - Sets the current controller by index.
 
-```gamepad:onKeyUp()```
-- Returns the current Key up event (when released)
+## Button Values
 
-## Values returned
-- Buttons
-  - ```A```
-  - ```B```
-  - ```X```
-  - ```Y```
-  - ```RSHOULDER```
-  - ```LSHOULDER```
-  - ```LTRIGGER```
-  - ```RTRIGGER```
-  - ```DPAD_UP```
-  - ```DPAD_DOWN```
-  - ```DPAD_LEFT```
-  - ```DPAD_RIGHT```
-  - ```START```
-  - ```BACK```
-  - ```LTHUMB_PRESS```
-  - ```RTHUMB_PRESS```
-  - ```LTHUMB_UP```
-  - ```LTHUMB_DOWN```
-  - ```LTHUMB_RIGHT```
-  - ```LTHUMB_LEFT```
-  - ```LTHUMB_UPLEFT```
-  - ```LTHUMB_UPRIGHT```
-  - ```LTHUMB_DOWNRIGHT```
-  - ```LTHUMB_DOWNLEFT```
-  - ```RTHUMB_UP```
-  - ```RTHUMB_DOWN```
-  - ```RTHUMB_RIGHT```
-  - ```RTHUMB_LEFT```
-  - ```RTHUMB_UPLEFT```
-  - ```RTHUMB_UPRIGHT```
-  - ```RTHUMB_DOWNRIGHT```
-  - ```RTHUMB_DOWNLEFT```
-- Axises
-  - Not Supported Yet (Coming Soon)
+- `A`
+- `B`
+- `X`
+- `Y`
+- `RSHOULDER`
+- `LSHOULDER`
+- `LTRIGGER`
+- `RTRIGGER`
+- `DPAD_UP`
+- `DPAD_DOWN`
+- `DPAD_LEFT`
+- `DPAD_RIGHT`
+- `START`
+- `BACK`
+- `LTHUMB_PRESS`
+- `RTHUMB_PRESS`
+- `LTHUMB_UP`
+- `LTHUMB_DOWN`
+- `LTHUMB_RIGHT`
+- `LTHUMB_LEFT`
+- `LTHUMB_UPLEFT`
+- `LTHUMB_UPRIGHT`
+- `LTHUMB_DOWNRIGHT`
+- `LTHUMB_DOWNLEFT`
+- `RTHUMB_UP`
+- `RTHUMB_DOWN`
+- `RTHUMB_RIGHT`
+- `RTHUMB_LEFT`
+- `RTHUMB_UPLEFT`
+- `RTHUMB_UPRIGHT`
+- `RTHUMB_DOWNRIGHT`
+- `RTHUMB_DOWNLEFT`
 
+## Thumb Stick (Axis)
 
-## TODOs:
-1. Add support for axis dection (angle)
-2. Add support for battery information from a wireless controller (if able to)
-3. Add support for detecting if the press is Down or Up
-4. 	~~Add Support for detecting if the press is repeating or not~~
+- **Not supported yet. See known issues below.**
 
+## Known Bugs
+
+1. The `getState()` function is not working correctly and does not assign values properly to the struct.
+2. Battery information for wireless controllers may be buggy (it might show "Disconnected" incorrectly).
+
+## Roadmap
+
+1. Add support for Axis (Angle).
+2. Add support for multiple controllers.
